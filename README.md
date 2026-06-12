@@ -31,7 +31,6 @@ A centralized sandbox repository compiling my independent research and developme
 ## 💻 Technical Stack Overview
 * **Engine:** Unity Engine
 * **Language:** C# (Object-Oriented Programming, Advanced Data Structures)
-* **Core APIs Utilized:** `Physics.Boxcast`, `Rigidbody`, `MeshFilter.sharedMesh`, LayerMasks, Dictionary-based Object Pooling
 
 ---
 *For a comprehensive high-level breakdown of my full portfolio, quantitative data architectures, and cloud web applications, please visit my main profile: [github.com/limguytheboy](https://github.com/limguytheboy)*
