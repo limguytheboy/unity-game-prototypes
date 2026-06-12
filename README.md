@@ -20,15 +20,22 @@ A centralized sandbox repository compiling my independent research and developme
 
 ---
 
-## 🌲 Procedural Generation Toolsets (Algorithms Focus)
-These directories isolate specific algorithmic generation frameworks built to bypass manual asset pipelines:
+### 🌲 1. Hybrid Procedural World & Infinite Chunk Loader (`ProceduralWorldGenerator`)
+* **Gameplay Overview:** An infinite open-world terrain generation sandbox designed for seamless player exploration. As the player moves, the world automatically instantiates, shapes, and smooths continuous mathematical landmasses (chunks) on the fly, guaranteeing a limitless map without manual editing or static boundary limits.
+* **Technical Implementation & Optimization:**
+  * **Infinite Spiral Chunk Loader (Object Pooling):** Designed an automated `ChunkLoader()` that loops on a dynamic spatial queue. Instead of instantiating new GameObjects and triggering heavy garbage collection, it caches deactivated entities inside a `PlaneList`, positions them using a spiral calculation pattern based on `PlayerPos`, and stores live vertex coordinates inside a generic `Dictionary<Vector2Int, (Mesh, float[,])>` lookup cache.
+  * **Stochastic Pathing & Perlin Noise Hybridization:** * Terrain shape seeds are determined by a recursive `NextBlock()` random-walk algorithm that computes directional coordinate expansion layers while analyzing neighborhood state densities (`count < 2`) to ensure natural distribution.
+    * The structural layout is translated into heights via `BoolMapToFloat()`, scaled using stacked raw mathematical configurations (`Mathf.PerlinNoise`), and recursively smoothed via an optimized dual-pass **`BlurringMap()` box filter matrix**.
+  * **Seam-Free Boundary Synchronization:** Solved the classic procedural terrain issue of detached mesh gaps between adjacent nodes. The **`SmoothingBTWChunks()`** pipeline automatically samples cross-border array rows and columns between independent chunks, calculating localized average values (`(CM + dict) * 0.5f`) to form seamless physics bridges and uniform mesh alignment during runtime.
 
-* **`V1ProceduralTerrainGenerator` & `V2ProceduralTerrainGenerator`**
-  * **Infinite Terrain Architecture:** Generates continuous 2D grid heights by calculating custom vertex displacements on a **16x16 mesh plane**. Uses structural graph-traversal logic (BFS/DFS) to calculate neighboring cell topologies for proximity-based mountain scales.
-  * **Memory Optimization:** Uses a `Dictionary`-based cache queue to instantly pool and reuse mesh planes based on player distance thresholds, eliminating continuous runtime garbage collection.
-* **`ProceduralTreeGenerator`**
-  * **Structural Object Spawning:** A specialized script algorithm that procedurally computes trunk diameters and branch splitting patterns to instantiate randomized, organic tree nodes across runtime coordinates.
-
+### 🌲 2. ProceduralTreeGenerator (`Dynamic 3D Branching Algorithm`)
+  * **Gameplay Overview:** A pure programmatic approach to organic asset creation. The tool algorithmic-generates 3D tree structures on the fly by combining 2D grid cell expansion loops with 3D procedural mesh generation, ensuring every tree has a completely unique growth pattern.
+  * **Dynamic Cellular Expansion Architecture:** * Implemented a centralized **`controlTower()` state machine** that coordinates branching layers. As the tree grows taller (`Xheight`), the algorithm dynamic-scales the generation grid bounds (`mapRoot`) to accommodate expanding branches.
+    * Developed a recursive **`NextBlock()` pipeline** that executes 2D pathfinding vectors. It analyzes adjacent coordinate densities to prevent branch overlapping (`count < 2`), and implements a stochastic logic loop that randomly decides whether to continue a single growth vector or split into multi-branch junctions (`splitAmount`).
+  * **Bone Structure & Procedural Mesh Pipeline:**
+    * Translates dynamic 2D array coordinates into 3D bone vectors (`Bone`) and indices (`Joints`), adding dynamic offsets using trigonometry (`Mathf.Cos/Sin`) and a localized height parameter.
+    * Generates raw 3D mesh data (`MakeMeshData`) by constructing custom cylinder-like vertex segments around each bone joint according to a defined thickness and subdivision metric (`detail`), capping the terminal endpoints with dynamically generated pyramid-cone primitives.
+ 
 ---
 
 ## 💻 Technical Stack Summary
