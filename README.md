@@ -4,33 +4,37 @@ A centralized sandbox repository compiling my independent research and developme
 
 ---
 
-## 📂 Repository Directory & Technical Breakdown
+## 📂 Repository Directory & Featured Projects
 
-### 🌲 Procedural Generation (V1 & V2)
-* **`V1ProceduralTerrainGenerator` & `V2ProceduralTerrainGenerator`**
-  * **Algorithmic Heightmapping:** Engineered dynamic 2D grid heights by calculating custom vertices on a 16x16 mesh plane. Leveraged structural graph-traversal logic (BFS/DFS) to compute adjacent cell topologies, generating natural mountain ranges based on proximity vectors.
-  * **Memory & Performance Optimization:** Implemented a chunk-rendering queue bound to a `Dictionary` lookup data structure. Instead of running continuous garbage-heavy instantiation loops, the system caches and reuses existing mesh planes based on the player’s distance thresholds.
+### 🚜 1. Grass Mower Idle Tycoon (`MowingGame`)
+* **Gameplay Overview:** A unique planetary tycoon game inspired by incremental mechanics. The player controls a dynamic lawnmower on a "miniature planet" covered entirely in grass. As you traverse the planet's surface and cut the grass, you earn money to unlock progressive upgrades. The grass continuously regenerates, and the ultimate objective is to maximize financial revenue through efficient planetary grid routing.
+* **Technical Highlights:** Implemented high-density entity batching. Replaced poly-heavy 3D geometries with lightweight, batched 2D quad meshes for the grass field to massively scale grass density without increasing GPU draw calls.
 
-### 🚜 Low-Overhead Micro-Simulations
-* **`MowingGame/Script`**
-  * **GPU Optimization via Batching:** Developed a grass-cutting idle-tycoon prototype focused on massive asset optimization.
-  * **Lightweight Entity Rendering:** Replaced dense, poly-heavy 3D geometries with lightweight, batched 2D quad meshes for the interactive grass field, drastically scaling runtime entity counts while heavily minimizing draw calls and CPU overhead.
+### 🔫 2. "NanJang" FPS Sandbox (`NanJangFPS`)
+* **Gameplay Overview:** A casual, fast-paced first-person action shooter built with practical progression systems. Instead of traditional firearms, the core combat loop revolves around dynamic environmental interaction: players grab physical objects scattered around the map and hurl them at opponents to inflict damage and secure eliminations. Includes an interactive main menu and a round timer.
+* **Technical Highlights:** Utilized precise `Physics.Boxcast` for interactive object grabbing pipelines and kinetic hit detection. Resolved high-speed physical wall-clipping and camera jitter bugs by reconfiguring moving bodies to `RigidbodyInterpolation.Interpolate` and `CollisionDetectionMode.ContinuousDynamic`.
 
-### 🔫 First-Person Systems & Physics
-* **`NanJangFPS`**
-  * **Kinetic Interaction Pipeline:** Programmed core FPS mechanics including responsive player translation, dynamic object grabbing, and physical projectile trajectories.
-  * **Collision Detection:** Utilized precise `Physics.Boxcast` sweeping routines for deterministic projectile collisions and hitscan object interaction layer verification.
-  * **Rigidbody Optimization:** Reconfigured high-velocity entity parameters to `RigidbodyInterpolation.Interpolate` and `CollisionDetectionMode.ContinuousDynamic`, completely resolving high-speed camera jitter and physical wall-clipping bugs.
-
-### 🌐 Sandbox Experiments
-* **`2DMMORPG`**
-  * A foundational sandbox environment dedicated to exploring 2D structural frameworks, decoupled state machines, and dynamic top-down character movement logic.
+### ⚔️ 3. 2D MMORPG Sandbox (`2DMMORPG`)
+* **Gameplay Overview:** A foundational prototype exploring core online-style top-down RPG systems (Work-in-Progress). The sandbox introduces basic PvE survival elements: players navigate a dynamic map, hunt hostile monsters spawned in the surrounding area, and harvest dropped items to progress through an incremental looting and grinding loop.
+* **Technical Highlights:** Focused on creating a modular, decoupled state machine to handle character movement logic, responsive enemy AI aggro ranges, and dynamic inventory/item drop tables.
 
 ---
 
-## 💻 Technical Stack Overview
+## 🌲 Procedural Generation Toolsets (Algorithms Focus)
+These directories isolate specific algorithmic generation frameworks built to bypass manual asset pipelines:
+
+* **`V1ProceduralTerrainGenerator` & `V2ProceduralTerrainGenerator`**
+  * **Infinite Terrain Architecture:** Generates continuous 2D grid heights by calculating custom vertex displacements on a **16x16 mesh plane**. Uses structural graph-traversal logic (BFS/DFS) to calculate neighboring cell topologies for proximity-based mountain scales.
+  * **Memory Optimization:** Uses a `Dictionary`-based cache queue to instantly pool and reuse mesh planes based on player distance thresholds, eliminating continuous runtime garbage collection.
+* **`ProceduralTreeGenerator`**
+  * **Structural Object Spawning:** A specialized script algorithm that procedurally computes trunk diameters and branch splitting patterns to instantiate randomized, organic tree nodes across runtime coordinates.
+
+---
+
+## 💻 Technical Stack Summary
 * **Engine:** Unity Engine
 * **Language:** C# (Object-Oriented Programming, Advanced Data Structures)
+* **Core APIs:** `Physics.Boxcast`, `Rigidbody`, LayerMasks, Dictionary-based Object Pooling, Custom Vertex Rendering
 
 ---
 *For a comprehensive high-level breakdown of my full portfolio, quantitative data architectures, and cloud web applications, please visit my main profile: [github.com/limguytheboy](https://github.com/limguytheboy)*
